@@ -21,6 +21,26 @@ class Tree
     root
   end
 
+  def insert(value, node = root)
+    if value == node.data
+      puts "Value is already in the tree. Insertion will not be executed."
+    elsif value < node.data
+      if node.left_child.nil?
+        node.left_child = Node.new(value, nil, nil)
+        return
+      end
+      node = node.left_child
+      insert(value, node)
+    elsif value > node.data
+      if node.right_child.nil?
+        node.right_child = Node.new(value, nil, nil)
+        return
+      end
+      node = node.right_child
+      insert(value, node)
+    end
+  end
+
   # The pretty print method is derived from the assignment instructions
 
   def pretty_print(node = @root, prefix = '', is_left = true)
