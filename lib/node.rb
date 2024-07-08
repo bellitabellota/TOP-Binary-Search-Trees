@@ -1,8 +1,8 @@
 class Node
-  attr_accessor :left_child, :right_child, :node
+  attr_accessor :left_child, :right_child, :data
 
-  def initialize(node, left_child, right_child)
-    @node = node
+  def initialize(data, left_child, right_child)
+    @data = data
     @left_child = left_child
     @right_child = right_child
   end
