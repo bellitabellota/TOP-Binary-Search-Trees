@@ -41,6 +41,24 @@ class Tree
     end
   end
 
+  def find(value, node = root)
+    if value == node.data
+      node
+    elsif value < node.data
+      return puts "Value does not exist in the tree." if node.left_child.nil?
+
+      node = node.left_child
+
+      node.data == value ? node : find(value, node)
+    elsif value > node.data
+      return puts "Value does not exist in the tree." if node.right_child.nil?
+
+      node = node.right_child
+
+      node.data == value ? node : find(value, node)
+    end
+  end
+
   # The pretty print method is derived from the assignment instructions
 
   def pretty_print(node = @root, prefix = '', is_left = true)

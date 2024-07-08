@@ -7,5 +7,9 @@ tree = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 # p tree.root.data
 # p tree.root.left_child.data
 
-tree.insert(24)
+#tree.insert(24)
 tree.pretty_print
+
+# deleting_leaf_node(3)
+
+p tree.find(6)
