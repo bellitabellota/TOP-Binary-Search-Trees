@@ -13,12 +13,12 @@ class Tree
     else
       mid = (start + ending) / 2
 
-      left_child = build_tree(array, start, mid - 1)
-      right_child = build_tree(array, mid + 1, ending)
+      node = Node.new(array[mid])
 
-      root = Node.new(array[mid], left_child, right_child)
+      node.left_child = build_tree(array, start, mid - 1)
+      node.right_child = build_tree(array, mid + 1, ending)
     end
-    root
+    node
   end
 
   def insert(value, node = root)
@@ -26,7 +26,7 @@ class Tree
       puts "Value is already in the tree. Insertion will not be executed."
     elsif value < node.data
       if node.left_child.nil?
-        node.left_child = Node.new(value, nil, nil)
+        node.left_child = Node.new(value)
         return
       end
       node = node.left_child
