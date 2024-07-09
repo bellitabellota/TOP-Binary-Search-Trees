@@ -33,7 +33,7 @@ class Tree
       insert(value, node)
     elsif value > node.data
       if node.right_child.nil?
-        node.right_child = Node.new(value, nil, nil)
+        node.right_child = Node.new(value)
         return
       end
       node = node.right_child
