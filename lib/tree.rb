@@ -104,23 +104,17 @@ class Tree
   end
 
   def insert(value, node = root)
-    if value == node.data
+    if node.nil?
+      return Node.new(value)
+    elsif value == node.data
       puts "Value is already in the tree. Insertion will not be executed."
     elsif value < node.data
-      if node.left_child.nil?
-        node.left_child = Node.new(value)
-        return
-      end
-      node = node.left_child
-      insert(value, node)
+      node.left_child = insert(value, node.left_child)
     elsif value > node.data
-      if node.right_child.nil?
-        node.right_child = Node.new(value)
-        return
-      end
-      node = node.right_child
-      insert(value, node)
+      node.right_child = insert(value, node.right_child)
     end
+
+    node
   end
 
   def find(value, node = root)
