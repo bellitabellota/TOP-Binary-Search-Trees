@@ -118,20 +118,15 @@ class Tree
   end
 
   def find(value, node = root)
-    if value == node.data
+    if node.nil?
+      puts "Value does not exist in the tree."
+      nil
+    elsif value == node.data
       node
     elsif value < node.data
-      return puts "Value does not exist in the tree." if node.left_child.nil?
-
-      node = node.left_child
-
-      node.data == value ? node : find(value, node)
+      find(value, node.left_child)
     elsif value > node.data
-      return puts "Value does not exist in the tree." if node.right_child.nil?
-
-      node = node.right_child
-
-      node.data == value ? node : find(value, node)
+      find(value, node.right_child)
     end
   end
 
