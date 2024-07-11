@@ -21,86 +21,35 @@ class Tree
     node
   end
 
-  def delete(value)
-    node_with_value = find(value)
-    return puts "Deletion cannot be executed." if node_with_value.nil?
+  def delete(value, node = root)
+    if node.nil?
+      return node
+    elsif value < node.data
+      node.left_child = delete(value, node.left_child)
+    elsif value > node.data
+      node.right_child = delete(value, node.right_child)
+    else # if value is same as the node's data
+      # node with only 1 or 0 children
+      if node.left_child.nil?
+        return node.right_child
+      elsif node.right_child.nil?
+        return node.left_child
+      end
 
-    if node_with_value.left_child.nil? && node_with_value.right_child.nil?
-      delete_leaf(node_with_value)
-    elsif node_with_value.left_child.nil? || node_with_value.right_child.nil?
-      delete_node_with_one_child(node_with_value)
-    else
-      delete_node_with_two_childs(node_with_value)
+      # node with 2 children
+      node.data = inorder_successor(node.right_child).data
+
+      node.right_child = delete(node.data, node.right_child)
     end
+
+    node
   end
 
-  def delete_node_with_two_childs(node_with_value)
-    parent_of_inorder_successor = find_parent_of_inorder_successor(node_with_value)
-    puts "Parent of inorder successor"
-    p parent_of_inorder_successor
-
-    if node_with_value.right_child.left_child.nil?
-      node_with_value.data = parent_of_inorder_successor.right_child.data
-      node_with_value.right_child = parent_of_inorder_successor.right_child.right_child
-    else
-      node_with_value.data = parent_of_inorder_successor.left_child.data
-      if parent_of_inorder_successor.left_child.right_child.nil?
-        parent_of_inorder_successor.left_child.data = nil
-      else
-        parent_of_inorder_successor.left_child = parent_of_inorder_successor.left_child.right_child
-      end
+  def inorder_successor(inorder_successor)
+    unless inorder_successor.left_child.nil?
+      inorder_successor = inorder_successor.left_child until inorder_successor.left_child.nil?
     end
-  end
-
-  def find_parent_of_inorder_successor(node_with_value)
-    if node_with_value.right_child.left_child.nil?
-      parent_of_inorder_successor = node_with_value
-    else
-      parent_of_inorder_successor = node_with_value.right_child
-
-      until parent_of_inorder_successor.left_child.left_child.nil?
-        parent_of_inorder_successor = inorder_successor.left_child
-      end
-    end
-    parent_of_inorder_successor
-  end
-
-  def delete_node_with_one_child(node_with_value, node = root)
-    if node.left_child == node_with_value
-      if node.left_child.left_child
-        node.left_child = node.left_child.left_child
-      elsif node.left_child.right_child
-        node.left_child = node.left_child.right_child
-      end
-      return
-    elsif node.right_child == node_with_value
-      if node.right_child.right_child
-        node.right_child = node.right_child.right_child
-      elsif node.right_child.left_child
-        node.right_child = node.right_child.left_child
-      end
-      return
-    elsif node_with_value.data < node.data
-      node = node.left_child
-    elsif node_with_value.data > node.data
-      node = node.right_child
-    end
-    delete_node_with_one_child(node_with_value, node)
-  end
-
-  def delete_leaf(node_with_value, node = root)
-    if node.left_child == node_with_value
-      node.left_child = nil
-      return
-    elsif node.right_child == node_with_value
-      node.right_child = nil
-      return
-    elsif node_with_value.data < node.data
-      node = node.left_child
-    elsif node_with_value.data > node.data
-      node = node.right_child
-    end
-    delete_leaf(node_with_value, node)
+    inorder_successor
   end
 
   def insert(value, node = root)
