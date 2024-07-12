@@ -21,6 +21,18 @@ class Tree
     node
   end
 
+  def height(value)
+    node = find(value)
+    height_recursive(node) - 1
+  end
+
+  def height_recursive(node)
+    return 0 if node.nil?
+    left_height = height_recursive(node.left_child)
+    right_height = height_recursive(node.right_child)
+    [left_height, right_height].max + 1
+  end
+
   def preorder(node = root, values = [], &block)
     return if node.nil?
 
@@ -51,9 +63,9 @@ class Tree
     values
   end
 
-  def level_order_iterative(queue = [node = root])
+  def level_order_iterative(node = root)
     return if node.nil?
-
+    queue = [node]
     values = []
 
     until queue.empty?

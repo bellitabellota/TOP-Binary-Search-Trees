@@ -18,4 +18,6 @@ tree = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 #tree.preorder { |node| puts node.data }
 
 # tree.inorder
-tree.postorder { |node| puts node.data }
+# tree.postorder { |node| puts node.data }
+
+# p tree.height(4)
