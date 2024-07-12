@@ -21,6 +21,25 @@ class Tree
     node
   end
 
+  def balanced?(node = root)
+    return true if node.nil?
+
+    height_left_subtree = height_recursive(node.left_child)
+    height_right_subtree = height_recursive(node.right_child)
+
+    if height_left_subtree >= height_right_subtree
+      difference = height_left_subtree - height_right_subtree
+    else
+      difference = height_right_subtree - height_left_subtree
+    end
+
+    is_balanced = difference <= 1
+
+    return false unless is_balanced
+
+    balanced?(node.left_child) && balanced?(node.right_child)
+  end
+
   def height(value)
     node = find(value)
     height_recursive(node) - 1
