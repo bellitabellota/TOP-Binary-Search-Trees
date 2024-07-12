@@ -21,6 +21,40 @@ class Tree
     node
   end
 
+  def level_order_iterative(queue = [node = root])
+    return if node.nil?
+
+    values = []
+
+    until queue.empty?
+      block_given? ? yield(queue[0]) : values.push(queue[0].data)
+
+      queue.push(node.left_child) unless node.left_child.nil?
+
+      queue.push(node.right_child) unless node.right_child.nil?
+
+      queue.shift
+      node = queue[0]
+    end
+    values unless block_given?
+  end
+
+  def level_order_recursive(node = root, queue = [node], values = [], &block)
+    return if node.nil? || queue.empty?
+
+    block_given? ? yield(queue[0]) : values.push(queue[0].data)
+
+    queue.push(node.left_child) unless node.left_child.nil?
+
+    queue.push(node.right_child) unless node.right_child.nil?
+
+    queue.shift
+
+    level_order_recursive(queue[0], queue, values, &block)
+
+    values unless block_given?
+  end
+
   def delete(value, node = root)
     if node.nil?
       return node
