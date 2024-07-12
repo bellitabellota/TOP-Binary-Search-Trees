@@ -21,6 +21,36 @@ class Tree
     node
   end
 
+  def preorder(node = root, values = [], &block)
+    return if node.nil?
+
+    block_given? ? yield(node) : values.push(node.data)
+    preorder(node.left_child, values, &block)
+    preorder(node.right_child, values, &block)
+
+    values
+  end
+
+  def inorder(node = root, values = [], &block)
+    return if node.nil?
+
+    inorder(node.left_child, values, &block)
+    block_given? ? yield(node) : values.push(node.data)
+    inorder(node.right_child, values, &block)
+
+    values
+  end
+
+  def postorder(node = root, values = [], &block)
+    return if node.nil?
+
+    postorder(node.left_child, values, &block)
+    postorder(node.right_child, values, &block)
+    block_given? ? yield(node) : values.push(node.data)
+
+    values
+  end
+
   def level_order_iterative(queue = [node = root])
     return if node.nil?
 
