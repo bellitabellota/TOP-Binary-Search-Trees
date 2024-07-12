@@ -26,8 +26,27 @@ class Tree
     height_recursive(node) - 1
   end
 
+  def depth(value)
+    node_of_given_value = find(value)
+
+    depth_recursive(node_of_given_value)
+  end
+
+  def depth_recursive(node_of_given_value, node = root)
+    if node_of_given_value == node
+      return 0
+    elsif node_of_given_value.data < node.data
+      height = depth_recursive(node_of_given_value, node.left_child) + 1
+    elsif node_of_given_value.data > node.data
+      height = depth_recursive(node_of_given_value, node.right_child) + 1
+    end
+
+    height
+  end
+
   def height_recursive(node)
     return 0 if node.nil?
+
     left_height = height_recursive(node.left_child)
     right_height = height_recursive(node.right_child)
     [left_height, right_height].max + 1
