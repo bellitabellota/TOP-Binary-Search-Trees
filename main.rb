@@ -26,11 +26,14 @@ tree = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 
 #p tree.balanced?
 
-
-
-
+tree.delete(5)
+tree.delete(7)
+tree.delete(3)
+tree.delete(1)
 
 tree.pretty_print
 
 p tree.balanced?
 
+tree.rebalance
+tree.pretty_print

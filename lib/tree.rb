@@ -1,5 +1,5 @@
 class Tree
-  attr_reader :root
+  attr_accessor :root
 
   def initialize(array)
     @root = build_tree(array.sort.uniq)
@@ -38,6 +38,10 @@ class Tree
     return false unless is_balanced
 
     balanced?(node.left_child) && balanced?(node.right_child)
+  end
+
+  def rebalance
+    self.root = build_tree(inorder)
   end
 
   def height(value)
